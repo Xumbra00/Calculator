@@ -13,11 +13,6 @@ function divide(a,b) {
     return a/b;
 }
 
-// console.log(add(3,5));
-// console.log(subtract(3,5));
-// console.log(multiply(3,5));
-// console.log(divide(3,5));
-
 // Write bellow the operate function
 
 function operate(operator, a, b) {
@@ -39,3 +34,4 @@ function operate(operator, a, b) {
 }
 
 console.log(operate("*",2,4));
+console.log(operate("-",3,1));

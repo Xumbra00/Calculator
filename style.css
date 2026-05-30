@@ -1,6 +1,13 @@
+/* write here down bellow Figma variables */
+
+:root {
+    --primary: #2975D9;
+    --secondary: #5BA9D9;
+    --dp: #B6DBF2;
+}
+
 * {
     background-color: black;
     font-family: Arial, Helvetica, sans-serif;
+    
 }
-
-/* write here down bellow Figma variables */

@@ -45,13 +45,56 @@
     gap: 30px;
     flex-direction: row;
     background-color: green;
+    /* justify-content: space-between; */
 }
 
-#numpad {
+#numbers {
     display: grid;
-    height: 340px;
-    width: 220px;
-    margin: auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    height: auto;
+    width: auto;
+    margin: 0 auto;
     gap: 0px 15px;
     background-color: red;
+    flex: 1;
+}
+
+#operations {
+    display: grid;
+    height: auto;
+    width: auto;
+    margin: 0 auto;
+    gap: 0px 15px;
+    background-color: yellow;
+    flex: 1;
+    /* flex-direction: column; */
+    grid-template-rows: 1fr 3fr;
+}
+
+#top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: auto;
+    width: auto;
+    margin: auto 0;
+    background-color: aqua;
+    flex: 1;
+
+}
+
+#bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: auto;
+    width: auto;
+    margin: 0 auto;
+    background-color: turquoise;
+}
+
+#plus, #minus {
+    margin: 0 auto;
+    background-color: white;
 }

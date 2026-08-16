@@ -1,5 +1,9 @@
-// Write the initial functions bellow
+// Basic variables definition
+A = 0;
+B = 0;
+operator = "";
 
+// Write the initial functions bellow
 function add(a, b) {
     return a+b;
 }
@@ -14,7 +18,6 @@ function divide(a,b) {
 }
 
 // Write bellow the operate function
-
 function operate(operator, a, b) {
     if (operator == "+") {
         return add(a,b);
@@ -33,5 +36,6 @@ function operate(operator, a, b) {
     }
 }
 
+// Tests
 console.log(operate("*",2,4));
-console.log(operate("-",3,1));
+console.log(operate("-",3,1)); 

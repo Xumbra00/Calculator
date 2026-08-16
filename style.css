@@ -7,7 +7,20 @@
 }
 
 * {
-    background-color: black;
+    background-color: white;
     font-family: Arial, Helvetica, sans-serif;
-    
+}
+
+.calculator {
+    background-color: var(--primary);
+    height: 50px;
+    width: 700px;
+    margin: auto;
+}
+
+#display {
+    background-color: var(--dp);
+    height: 60;
+    width: auto;
+    margin: 15px;
 }

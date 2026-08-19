@@ -44,7 +44,9 @@ input {
 }
 
 .buttons:active {
-    background-color: var(--primary);
+    background-color: var(--secondary);
+    box-shadow: black 2px 2px 0px;
+    transform: translateY(5px) translateX(5px);
 }
 
 #body {

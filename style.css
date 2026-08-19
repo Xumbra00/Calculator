@@ -12,6 +12,7 @@
     color: var(--police);
     font-family: Roboto, Arial, Helvetica, sans-serif;
     text-align: center;
+    font-size: 23px;
 }
 
 .calculator {
@@ -53,14 +54,23 @@
 
 #numbers {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     height: auto;
     width: auto;
     margin: 0 auto;
-    gap: 0px 15px;
+    gap: 15px;
     background-color: red;
     flex: 1;
+}
+
+.numbers {
+    background-color: lightblue;
+    height: 100%;
+    width: 100%;
+    align-self: stretch;
+    justify-self: stretch;
+    align-content: center;
 }
 
 #operations {

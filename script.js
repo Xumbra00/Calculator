@@ -39,3 +39,6 @@ function operate(operator, a, b) {
 // Tests
 console.log(operate("*",2,4));
 console.log(operate("-",3,1)); 
+
+
+// We want the calculator to be able to calculate for the solution automatically before equal (preview)

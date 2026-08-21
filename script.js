@@ -1,8 +1,8 @@
 // Basic variables definition
-A = undefined;
-B = undefined;
-newNumber = undefined;
-operator = "";
+let A = undefined;
+let B = undefined;
+let newValue = undefined;
+let operator = "";
 
 // Write the initial functions bellow
 function add(a, b) {
@@ -41,17 +41,17 @@ function operate(operator, a, b) {
 console.log(operate("*",2,4));
 console.log(operate("-",3,1)); 
 
-
-// Here the function to update a and b
-function updateValues(a, b) {
-    const buttons = document.querySelectorAll('button');
-    buttons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            console.log('clicked: ' + event.target.textContent);
-            newNumber = (event.target.textContent);
-        });
+// newValue update
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => {
+    button.addEventListener('click', (event) => {
+        console.log('something clicked.');
+        console.log('clicked: ' + event.target.textContent);
+        newValue = (event.target.textContent);
+        console.log('newValue: ' + newValue);
     });
-}
+});
+
 
 // Write bellow the function that takes the operate return to output it
 function output(x) {

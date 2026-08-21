@@ -1,6 +1,7 @@
 // Basic variables definition
-A = 0;
-B = 0;
+A = undefined;
+B = undefined;
+newNumber = undefined;
 operator = "";
 
 // Write the initial functions bellow
@@ -39,6 +40,24 @@ function operate(operator, a, b) {
 // Tests
 console.log(operate("*",2,4));
 console.log(operate("-",3,1)); 
+
+
+// Here the function to update a and b
+function updateValues(a, b) {
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            console.log('clicked: ' + event.target.textContent);
+            newNumber = (event.target.textContent);
+        });
+    });
+}
+
+// Write bellow the function that takes the operate return to output it
+function output(x) {
+    console.log(operate(x));
+}
+
 
 
 // We want the calculator to be able to calculate for the solution automatically before equal (preview)

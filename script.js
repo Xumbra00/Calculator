@@ -49,14 +49,27 @@ buttons.forEach(button => {
         console.log('clicked: ' + event.target.textContent);
         newValue = (event.target.textContent);
         console.log('newValue: ' + newValue);
+        // Add clicked to display
+        const dp = document.querySelector('input');
+        dp.value += event.target.textContent;
+        // condition to equal
+        if (newValue == "=") {
+            // Write bellow the function using sanitized expression
+        }
     });
 });
 
 
 // Write bellow the function that takes the operate return to output it
-function output(x) {
-    console.log(operate(x));
+function output(x) {    
+    console.log(newValue);
 }
+
+
+
+
+
+
 
 
 

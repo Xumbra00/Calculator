@@ -3,6 +3,7 @@ let A = undefined;
 let B = undefined;
 let newValue = undefined;
 let operator = "";
+let expression = "";
 
 // Write the initial functions bellow
 function add(a, b) {
@@ -38,8 +39,8 @@ function operate(operator, a, b) {
 }
 
 // Tests
-console.log(operate("*",2,4));
-console.log(operate("-",3,1)); 
+// console.log(operate("*",2,4));
+// console.log(operate("-",3,1)); 
 
 // newValue update
 const buttons = document.querySelectorAll('button');
@@ -51,10 +52,20 @@ buttons.forEach(button => {
         console.log('newValue: ' + newValue);
         // Add clicked to display
         const dp = document.querySelector('input');
-        dp.value += event.target.textContent;
+        // dp.value += event.target.textContent;
+        if (event.target.textContent !== '=') {
+            dp.value += event.target.textContent;
+        }
         // condition to equal
-        if (newValue == "=") {
-            // Write bellow the function using sanitized expression
+        if (event.target.textContent == '=') {
+            // Write bellow the function using sanitized expression ?
+
+            console.log(parseInt(expression));
+            const result = new Function(`return ${expression}`)(); // Deprecated, change this shit
+
+
+            // expression = dp.value;
+            // console.log(parseInt(expression));
         }
     });
 });

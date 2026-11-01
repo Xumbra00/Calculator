@@ -5,6 +5,15 @@ let newValue = undefined;
 let operator = "";
 let expression = "";
 
+// focus on input at loading and disable space
+const field = document.querySelector('input');
+field.focus();
+field.addEventListener('keydown', (event) => {
+    if (event.key === ' ' || event.code === 'Space') {
+        event.preventDefault();
+    }
+})
+
 // Write the initial functions bellow
 function add(a, b) {
     return a+b;
@@ -52,7 +61,7 @@ buttons.forEach(button => {
         console.log('newValue: ' + newValue);
         const dp = document.querySelector('input');
         // condition to equal
-        if (event.target.textContent === '=') {
+        if (event.target.textContent === '=' | event.target.textContent === 'AC' | event.target.textContent === 'DEL') {
             // Write bellow the function using sanitized expression ?
             let expression = dp.value;
             // expression = expression.split("")
@@ -64,6 +73,7 @@ buttons.forEach(button => {
         else {
             dp.value += event.target.textContent;
         }
+        field.focus(); // keep the focus even after clicking
     });
 });
 
@@ -90,25 +100,27 @@ function showResult() {
 }
 const eq = document.querySelector('#equal');
 eq.addEventListener('click', showResult);
+
+
+// Kb monitoring
 window.addEventListener('keydown', (event) => {
+        // enter to show result
     if (event.key === 'Enter') {
         event.target.blur();
         showResult();
+    } else if (event.key === 'Backspace') {
+        // backspace for del
+        event.target.blur();
+        delChar();
     }
 });
 
+// Del button
+const del = document.querySelector('#del');
+del.addEventListener('click', delChar);
+function delChar() {
+    const typed = document.querySelector("input");
+    typed.value = typed.value.slice(0, -1);
+}
 
 // We want the calculator to be able to calculate for the solution automatically before equal (preview)
-
-function alex() {
-    let str = "5 + 10 * 2 - 3";
-
-// 1. Clean the string to ONLY allow numbers, spaces, and + - * / .
-// If anything else is in the string, it gets rejected.
-if (/^[0-9+\-*/\s.]+\$/.test(str)) {
-    let result = new Function(`return ${str}`)();
-    console.log(result); // 22
-} else {
-    console.log("Invalid or dangerous input detected!");
-}
-}

@@ -70,10 +70,32 @@ buttons.forEach(button => {
 
 // Write bellow the function that takes the operate return to output it
 function output(x) {    
-    console.log(newValue);
+    const typed = document.querySelector('input');
+    let str = typed.value;
+    if (/^[0-9+\-*/\s.×]+$/.test(str)) {
+        str = str.replace(/×/g, '*'); // replace the sign x with *. The /g stands for global search. It replace all of the signs
+        let result = new Function(`return ${str}`)();
+        console.log(result);
+        return result;
+    } else {
+        console.log("invalid or dangerous input");
+    }
 }
 
-
+// When equal or enter is pressed
+function showResult() {
+    const display = document.querySelector('input');
+    const result = output();
+    display.value = result;
+}
+const eq = document.querySelector('#equal');
+eq.addEventListener('click', showResult);
+window.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        event.target.blur();
+        showResult();
+    }
+});
 
 
 // We want the calculator to be able to calculate for the solution automatically before equal (preview)

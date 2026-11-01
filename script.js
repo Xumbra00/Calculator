@@ -50,22 +50,19 @@ buttons.forEach(button => {
         console.log('clicked: ' + event.target.textContent);
         newValue = (event.target.textContent);
         console.log('newValue: ' + newValue);
-        // Add clicked to display
         const dp = document.querySelector('input');
-        // dp.value += event.target.textContent;
-        if (event.target.textContent !== '=') {
-            dp.value += event.target.textContent;
-        }
         // condition to equal
-        if (event.target.textContent == '=') {
+        if (event.target.textContent === '=') {
             // Write bellow the function using sanitized expression ?
+            let expression = dp.value;
+            // expression = expression.split("")
 
-            console.log(parseInt(expression));
-            const result = new Function(`return ${expression}`)(); // Deprecated, change this shit
+        }
+        // Might add an else if for the sanitization of the input
 
-
-            // expression = dp.value;
-            // console.log(parseInt(expression));
+        // Add clicked value to display
+        else {
+            dp.value += event.target.textContent;
         }
     });
 });
@@ -79,9 +76,17 @@ function output(x) {
 
 
 
-
-
-
-
-
 // We want the calculator to be able to calculate for the solution automatically before equal (preview)
+
+function alex() {
+    let str = "5 + 10 * 2 - 3";
+
+// 1. Clean the string to ONLY allow numbers, spaces, and + - * / .
+// If anything else is in the string, it gets rejected.
+if (/^[0-9+\-*/\s.]+\$/.test(str)) {
+    let result = new Function(`return ${str}`)();
+    console.log(result); // 22
+} else {
+    console.log("Invalid or dangerous input detected!");
+}
+}

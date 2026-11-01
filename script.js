@@ -112,6 +112,7 @@ window.addEventListener('keydown', (event) => {
         // backspace for del
         event.target.blur();
         delChar();
+        field.focus();
     } else if (event.key === 'c') {
         event.target.blur();
         clear();

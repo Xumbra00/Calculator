@@ -112,6 +112,9 @@ window.addEventListener('keydown', (event) => {
         // backspace for del
         event.target.blur();
         delChar();
+    } else if (event.key === 'c') {
+        event.target.blur();
+        clear();
     }
 });
 
@@ -122,5 +125,13 @@ function delChar() {
     const typed = document.querySelector("input");
     typed.value = typed.value.slice(0, -1);
 }
+
+// AC button
+function clear() {
+    const typed = document.querySelector("input");
+    typed.value = "";
+}
+const ac = document.querySelector('#ac');
+ac.addEventListener("click", clear);
 
 // We want the calculator to be able to calculate for the solution automatically before equal (preview)

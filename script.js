@@ -1,9 +1,5 @@
 // Basic variables definition
-let A = undefined;
-let B = undefined;
 let newValue = undefined;
-let operator = "";
-let expression = "";
 
 // focus on input at loading and disable space
 const field = document.querySelector('input');
@@ -60,18 +56,16 @@ buttons.forEach(button => {
         newValue = (event.target.textContent);
         console.log('newValue: ' + newValue);
         const dp = document.querySelector('input');
-        // condition to equal
-        if (event.target.textContent === '=' | event.target.textContent === 'AC' | event.target.textContent === 'DEL') {
-            // Write bellow the function using sanitized expression ?
+        if (event.target.textContent === '=' || event.target.textContent === 'AC' || event.target.textContent === 'DEL') {
+            // condition to equal, it doesn't change
             let expression = dp.value;
-            // expression = expression.split("")
-
-        }
-        // Might add an else if for the sanitization of the input
-
-        // Add clicked value to display
-        else {
+        } else if (newValue === "+" || newValue === "×" || newValue === "-" || newValue === "/") {
+            // If count reach 2, it calculates the expression
             dp.value += event.target.textContent;
+            operatorCount();
+        } else {
+            // Add clicked value to display
+            dp.value += event.target.textContent; 
         }
         field.focus(); // keep the focus even after clicking
     });
@@ -83,8 +77,12 @@ function output(x) {
     const typed = document.querySelector('input');
     let str = typed.value;
     if (/^[0-9+\-*/\s.×]+$/.test(str)) {
+        const trailMatch = str.match(/([+\-\*×\/])\s*$/);
+        const trail = trailMatch ? trailMatch[1] : "";
         str = str.replace(/×/g, '*'); // replace the sign x with *. The /g stands for global search. It replace all of the signs
+        str = str.replace(/[\+\-\*×\/]\s*$/, "");
         let result = new Function(`return ${str}`)();
+        result = result + trail;
         console.log(result);
         return result;
     } else {
@@ -134,4 +132,12 @@ function clear() {
 const ac = document.querySelector('#ac');
 ac.addEventListener("click", clear);
 
-// We want the calculator to be able to calculate for the solution automatically before equal (preview)
+function operatorCount() {
+    let expression = document.querySelector("input");
+    expression = expression.value;
+    const count = expression.match(/[\+\-\*×\/]/g);
+    if (count && count.length === 2) {
+        showResult();
+        field.focus();
+    }
+}

@@ -78,10 +78,11 @@ function output(x) {
     let str = typed.value;
     if (/^[0-9+\-*/\s.×]+$/.test(str)) {
         const trailMatch = str.match(/([+\-\*×\/])\s*$/);
-        const trail = trailMatch ? trailMatch[1] : "";
+        const trail = trailMatch ? trailMatch[1] : ""; // Condition in cas if trail is empty
         str = str.replace(/×/g, '*'); // replace the sign x with *. The /g stands for global search. It replace all of the signs
-        str = str.replace(/[\+\-\*×\/]\s*$/, "");
-        let result = new Function(`return ${str}`)();
+        str = str.replace(/[\+\-\*×\/]\s*$/, ""); // delete last operator e.g "3+3+" will be "3+3"
+        let result = new Function(`return ${str}`)(); 
+        result = Number(result.toFixed(5)); // Round result to the 5th decimal
         result = result + trail;
         console.log(result);
         return result;

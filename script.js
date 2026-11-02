@@ -1,9 +1,6 @@
 // Basic variables definition
-let A = undefined;
-let B = undefined;
 let newValue = undefined;
-let operator = "";
-let expression = "";
+let shouldResetInput = false;
 
 // focus on input at loading and disable space
 const field = document.querySelector('input');
@@ -55,23 +52,33 @@ function operate(operator, a, b) {
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => {
     button.addEventListener('click', (event) => {
-        console.log('something clicked.');
-        console.log('clicked: ' + event.target.textContent);
+        // console.log('something clicked.');
+        // console.log('clicked: ' + event.target.textContent);
         newValue = (event.target.textContent);
-        console.log('newValue: ' + newValue);
+        // console.log('newValue: ' + newValue);
         const dp = document.querySelector('input');
-        // condition to equal
-        if (event.target.textContent === '=' | event.target.textContent === 'AC' | event.target.textContent === 'DEL') {
-            // Write bellow the function using sanitized expression ?
-            let expression = dp.value;
-            // expression = expression.split("")
-
+        if (shouldResetInput) {
+            dp.value = "";
+            shouldResetInput = false; // Turn the flag back off
         }
-        // Might add an else if for the sanitization of the input
-
-        // Add clicked value to display
-        else {
+        if (event.target.textContent === '.') {
+            const parts = dp.value.split(/[\+\-\*×\/]/);
+            const currentNum = parts[parts.length - 1];
+            if (currentNum.includes('.')) {
+                return;
+            }
+        }
+        if (event.target.textContent === '=' || event.target.textContent === 'AC' || event.target.textContent === 'DEL') {
+            // condition to equal, it doesn't change
+            let expression = dp.value;
+            shouldResetInput = true;
+        } else if (newValue === "+" || newValue === "×" || newValue === "-" || newValue === "/") {
+            // If count reach 2, it calculates the expression
             dp.value += event.target.textContent;
+            operatorCount();
+        } else {
+            // Add clicked value to display
+            dp.value += event.target.textContent; 
         }
         field.focus(); // keep the focus even after clicking
     });
@@ -83,12 +90,27 @@ function output(x) {
     const typed = document.querySelector('input');
     let str = typed.value;
     if (/^[0-9+\-*/\s.×]+$/.test(str)) {
+        const trailMatch = str.match(/([+\-\*×\/])\s*$/);
+        const trail = trailMatch ? trailMatch[1] : ""; // Condition in cas if trail is empty
         str = str.replace(/×/g, '*'); // replace the sign x with *. The /g stands for global search. It replace all of the signs
-        let result = new Function(`return ${str}`)();
+        str = str.replace(/[\+\-\*×\/]\s*$/, ""); // delete last operator e.g "3+3+" will be "3+3"
+        const isDivisionByZero = /\/\s*0(\.0+)?\b/.test(str);
+        if (isDivisionByZero) {
+            console.log("division by zero");
+            let error = "Can't divide by zero. (¬_¬')";
+            return error;
+        }
+        let result = new Function(`return ${str}`)(); 
+        result = Number(result.toFixed(7)); // Round result to the 5th decimal
+        result = result + trail;
         console.log(result);
         return result;
+    } else if (str === "") {
+        console.log("nothing was typed");
+        return "";
     } else {
         console.log("invalid or dangerous input");
+        return error
     }
 }
 
@@ -99,7 +121,10 @@ function showResult() {
     display.value = result;
 }
 const eq = document.querySelector('#equal');
-eq.addEventListener('click', showResult);
+eq.addEventListener('click', () => {
+    showResult();
+    shouldResetInput = true;
+});
 
 
 // Kb monitoring
@@ -135,4 +160,12 @@ function clear() {
 const ac = document.querySelector('#ac');
 ac.addEventListener("click", clear);
 
-// We want the calculator to be able to calculate for the solution automatically before equal (preview)
+function operatorCount() {
+    let expression = document.querySelector("input");
+    expression = expression.value;
+    const count = expression.match(/[\+\-\*×\/]/g);
+    if (count && count.length === 2) {
+        showResult();
+        field.focus();
+    }
+}

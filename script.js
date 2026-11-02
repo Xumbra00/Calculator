@@ -1,5 +1,6 @@
 // Basic variables definition
 let newValue = undefined;
+let shouldResetInput = false;
 
 // focus on input at loading and disable space
 const field = document.querySelector('input');
@@ -51,14 +52,26 @@ function operate(operator, a, b) {
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => {
     button.addEventListener('click', (event) => {
-        console.log('something clicked.');
-        console.log('clicked: ' + event.target.textContent);
+        // console.log('something clicked.');
+        // console.log('clicked: ' + event.target.textContent);
         newValue = (event.target.textContent);
-        console.log('newValue: ' + newValue);
+        // console.log('newValue: ' + newValue);
         const dp = document.querySelector('input');
+        if (shouldResetInput) {
+            dp.value = "";
+            shouldResetInput = false; // Turn the flag back off
+        }
+        if (event.target.textContent === '.') {
+            const parts = dp.value.split(/[\+\-\*×\/]/);
+            const currentNum = parts[parts.length - 1];
+            if (currentNum.includes('.')) {
+                return;
+            }
+        }
         if (event.target.textContent === '=' || event.target.textContent === 'AC' || event.target.textContent === 'DEL') {
             // condition to equal, it doesn't change
             let expression = dp.value;
+            shouldResetInput = true;
         } else if (newValue === "+" || newValue === "×" || newValue === "-" || newValue === "/") {
             // If count reach 2, it calculates the expression
             dp.value += event.target.textContent;
@@ -81,13 +94,23 @@ function output(x) {
         const trail = trailMatch ? trailMatch[1] : ""; // Condition in cas if trail is empty
         str = str.replace(/×/g, '*'); // replace the sign x with *. The /g stands for global search. It replace all of the signs
         str = str.replace(/[\+\-\*×\/]\s*$/, ""); // delete last operator e.g "3+3+" will be "3+3"
+        const isDivisionByZero = /\/\s*0(\.0+)?\b/.test(str);
+        if (isDivisionByZero) {
+            console.log("division by zero");
+            let error = "Can't divide by zero. (¬_¬')";
+            return error;
+        }
         let result = new Function(`return ${str}`)(); 
-        result = Number(result.toFixed(5)); // Round result to the 5th decimal
+        result = Number(result.toFixed(7)); // Round result to the 5th decimal
         result = result + trail;
         console.log(result);
         return result;
+    } else if (str === "") {
+        console.log("nothing was typed");
+        return "";
     } else {
         console.log("invalid or dangerous input");
+        return error
     }
 }
 
@@ -98,7 +121,10 @@ function showResult() {
     display.value = result;
 }
 const eq = document.querySelector('#equal');
-eq.addEventListener('click', showResult);
+eq.addEventListener('click', () => {
+    showResult();
+    shouldResetInput = true;
+});
 
 
 // Kb monitoring
